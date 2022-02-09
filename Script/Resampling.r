@@ -184,7 +184,7 @@ crab_ebs %>%
   mutate(haul_type = recode(haul_type, "3" = "Leg 1", "17" = "Resampling")) %>%
   group_by(year) %>%
   ggplot()+
-  geom_histogram(aes(x=cl), binwidth=2, color = "#000000", fill = "cyan") +
+  geom_histogram(aes(x=cl), binwidth=2, color = "#000000", fill = "red") +
   facet_wrap(~haul_type) +
   theme_bw() +
   xlab("Carapace Length (mm)") +
