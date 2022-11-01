@@ -9,6 +9,7 @@
 library(RColorBrewer)
 library(patchwork)
 library(tidyverse)
+library(lubridate)
 
 ### LOAD DATA
 catch_rkc <- read.csv("./Data/CRABHAUL_RKC.csv")
@@ -66,3 +67,27 @@ ggplot() +
   ylab("Julian day")
 
 ggsave("./Figures/bbrkc_dates_ts.png")
+
+# plot mean date only
+plot_mean <- bbrkc_dates %>%
+  select(year, mean_samp_date, CI_samp)
+
+xtra <- data.frame(year = 2020,
+                   mean_samp_date = NA,
+                   CI_samp = NA)
+
+plot <- rbind(plot_mean, xtra) %>%
+  arrange(year)
+
+ggplot(plot, aes(year, mean_samp_date)) +
+  geom_line() + 
+  geom_point() +
+  geom_errorbar(aes(ymin = mean_samp_date - CI_samp,
+                ymax = mean_samp_date + CI_samp)) +
+  geom_smooth(method = "gam", se = F) +
+  theme_bw() + 
+  theme(axis.title.x = element_blank()) +
+  ylab("Mean sampling date (day of year)")
+  
+
+ggsave("./Figures/bbrkc_mean_date.png", width = 6, height = 4, units = 'in')
