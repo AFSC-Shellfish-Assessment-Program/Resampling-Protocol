@@ -91,3 +91,6 @@ ggplot(plot, aes(year, mean_samp_date)) +
   
 
 ggsave("./Figures/bbrkc_mean_date.png", width = 6, height = 4, units = 'in')
+
+# save data
+write.csv(bbrkc_dates, "./Output/bbrkc_dates.csv", row.names = F)
